@@ -32,6 +32,12 @@ export class Cliente extends Model {
   })
   declare apellido_materno: string;
 
+  @AllowNull(true)
+  @Column({
+    type: DataType.STRING(1),
+  })
+  declare genero: string;
+
   @AllowNull(false)
   @Unique(true)
   @Column({

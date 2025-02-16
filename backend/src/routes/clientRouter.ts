@@ -4,11 +4,19 @@ import { handleInputErrors } from "../middleware/Validation";
 import { limiter } from "../config/limiter";
 import { ClientController } from "../controllers/ClientController";
 import { authenticate } from "../middleware/authAdmin";
-import { validateInputClient } from "../middleware/client";
+import {
+  validateClientExist,
+  validateClientID,
+  validateInputClient,
+} from "../middleware/client";
 
 const router = Router();
 router.use(limiter);
 
+router.param("clientID", validateClientID);
+router.param("clientID", validateClientExist);
+
+router.get("/", authenticate, ClientController.getAll);
 router.post(
   "/",
   authenticate,
@@ -16,5 +24,9 @@ router.post(
   handleInputErrors,
   ClientController.create
 );
+
+router.get("/:clientID", authenticate, ClientController.getByID);
+router.put("/:clientID", authenticate, ClientController.updateByID);
+router.delete("/:clientID", authenticate, ClientController.deleteByID);
 
 export default router;

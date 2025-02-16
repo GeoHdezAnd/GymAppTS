@@ -28,6 +28,14 @@ export const validateInputClientAuth = async (
     .notEmpty()
     .withMessage("El nombre es obligatorio")
     .run(req);
+  await body("genero")
+    .notEmpty()
+    .withMessage("El genero es obligatorio")
+    .isLength({ min: 1, max: 1 })
+    .withMessage("El genero debe contener 1 letra")
+    .isIn(["F", "M"])
+    .withMessage("El genero debe ser F o M")
+    .run(req);
   await body("email").isEmail().withMessage("El email no es valido").run(req);
   await body("telefono")
     .isMobilePhone("es-MX")

@@ -17,6 +17,14 @@ router.post(
   ShopMembershipController.createSale
 );
 
-router.get("/", ShopMembershipController.getAll)
+router.get("/", ShopMembershipController.getAll);
+router.get("/last", authenticate, ShopMembershipController.getLastMemership);
+router.delete(
+  "/:saleID",
+  param("saleID").isInt().withMessage("No puede ser vacio el ID de la venta"),
+  handleInputErrors,
+  authenticate,
+  ShopMembershipController.delete
+);
 
 export default router;

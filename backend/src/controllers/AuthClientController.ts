@@ -27,6 +27,7 @@ export class AuthClientController {
         nombre,
         apellido_paterno,
         apellido_materno,
+        genero,
         email,
         telefono,
         password,
@@ -56,6 +57,7 @@ export class AuthClientController {
         nombre,
         apellido_paterno,
         apellido_materno,
+        genero,
         email,
         telefono,
         fecha_nacimiento,
@@ -72,7 +74,9 @@ export class AuthClientController {
       });
 
       await client.save();
-      res.status(201).json({ msg: "Registrado correctamente revise su correo" });
+      res
+        .status(201)
+        .json({ msg: "Registrado correctamente revise su correo" });
     } catch (error) {
       // console.log(error);
       res.status(500).json({ error: "Ocurrio un error en el servidor" });

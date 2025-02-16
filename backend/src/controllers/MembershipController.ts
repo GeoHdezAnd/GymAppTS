@@ -5,6 +5,9 @@ export class MembershipController {
   static getAll = async (req: Request, res: Response) => {
     try {
       const memberships = await Membresia.findAll({
+        where: {
+          eliminado: false,
+        },
         order: [["precio", "ASC"]],
       });
       res.status(200).json(memberships);
@@ -45,7 +48,7 @@ export class MembershipController {
       await req.membership.update({
         eliminado,
       });
-      res.status(201).json({msg: 'Membresia eliminada'});
+      res.status(201).json({ msg: "Membresia eliminada" });
     } catch (error) {
       // console.log(error)
       res.status(500).json({ error: "Ocurrió un error" });
