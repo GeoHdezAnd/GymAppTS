@@ -17,6 +17,8 @@ router.param("clientID", validateClientID);
 router.param("clientID", validateClientExist);
 
 router.get("/", authenticate, ClientController.getAll);
+router.get("/:clientID", authenticate, ClientController.getByID);
+router.get("/:clientID/attendances", ClientController.getAttendances);
 router.post(
   "/",
   authenticate,
@@ -25,7 +27,6 @@ router.post(
   ClientController.create
 );
 
-router.get("/:clientID", authenticate, ClientController.getByID);
 router.put("/:clientID", authenticate, ClientController.updateByID);
 router.delete("/:clientID", authenticate, ClientController.deleteByID);
 

@@ -4,6 +4,7 @@ import { Cliente } from "../models/Cliente";
 import { generateToken } from "../utils/token";
 import { createMatricula, hashPassword } from "../utils/auth";
 import { AuthEmail } from "../emails/Email";
+import { Asistencia } from "../models/Asistencia";
 
 export class ClientController {
   static getAll = async (req: Request, res: Response) => {
@@ -113,6 +114,24 @@ export class ClientController {
     } catch (error) {
       // console.log(error)
       res.status(500).json({ error: "Ocurrió un error" });
+    }
+  };
+
+  static getAttendances = async (req: Request, res: Response) => {
+    const { clientID } = req.params;
+    try {
+      const attendances = await Asistencia.findAll({
+        where: { cliente_id: clientID },
+      });
+      if (!attendances || attendances.length === 0) {
+        const error = new Error("No hay asistencias");
+        res.status(409).json({ error: error.message });
+        return;
+      }
+      res.json(attendances);
+    } catch (error) {
+      // console.log(error)
+      res.status(500).json({ error: "Ocurrió un error en el servidor" });
     }
   };
 }

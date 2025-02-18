@@ -1,0 +1,49 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* BOTON DINAMICO */
+.btn-global {
+  @apply border border-white bg-black text-white px-2 py-1 rounded-md transition-all duration-300;
+}
+
+.btn-global:hover,
+.btn-global.active {
+  @apply bg-opacity-15 bg-white text-black border-black;
+  animation: lift 0.3s ease forwards;
+}
+
+.btn-global:not(:hover):not(:active) {
+  animation: lift-reverse 0.3s ease;
+}
+
+/* Formulario */
+.form-input {
+  @apply w-full text-sm px-3 py-1 text-black border border-gray-700 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-900  focus:border-transparent transition-all;
+}
+.form-label {
+  @apply block text-sm font-medium text-gray-600 mb-1;
+}
+
+/* ANIMACIONES*/
+@keyframes lift {
+  0% {
+    transform: translateY(0) scale(1);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  100% {
+    transform: translateY(-1px) scale(1.02);
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3);
+  }
+}
+
+@keyframes lift-reverse {
+  0% {
+    transform: translateY(-1px) scale(1.02);
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3);
+  }
+  100% {
+    transform: translateY(0) scale(1);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+}

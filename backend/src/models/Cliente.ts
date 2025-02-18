@@ -9,6 +9,7 @@ import {
   HasMany,
 } from "sequelize-typescript";
 import { VentasMembresia } from "./VentasMembresia";
+import { Asistencia } from "./Asistencia";
 
 @Table({
   tableName: "cliente",
@@ -94,4 +95,10 @@ export class Cliente extends Model {
     onDelete: "CASCADE",
   })
   declare ventas_membresia: VentasMembresia[];
+
+  @HasMany(() => Asistencia, {
+    onUpdate: "SET NULL",
+    onDelete: "CASCADE",
+  })
+  declare asistencia: Asistencia[];
 }
