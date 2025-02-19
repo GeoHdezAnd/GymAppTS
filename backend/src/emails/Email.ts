@@ -15,7 +15,7 @@ export class AuthEmail {
       html: `
             <p>Hola: ${user.nombre}, has creado tu cuenta en GymApp, ya está casi lista </p>
             <p>Visita el siguiente enlace</p>
-            <a href="#">Confirmar</a>
+            <a href="${process.env.FRONTEND_URL}/auth/admin/confirm-account">Confirmar</a>
             <p>e ingresa el código: <b>${user.token}</b></p>
         `,
     });
@@ -31,7 +31,7 @@ export class AuthEmail {
       html: `
             <p>Hola: ${user.nombre}, has solicitado el cambio de tu contraseña </p>
             <p>Visita el siguiente enlace</p>
-            <a href="#">Reestablecer contraseña</a>
+            <a href="${process.env.FRONTEND_URL}/auth/admin/new-password">Reestablecer contraseña</a>
             <p>e ingresa el código: <b>${user.token}</b></p>
             <b>Ignora este email si tú no solicitaste el cambio</b>
         `,

@@ -1,4 +1,5 @@
 import Logo from "@/components/ui/Logo";
+import { ToastContainer } from "react-toastify";
 
 export default function AuthAdminLayout({
   children,
@@ -24,6 +25,7 @@ export default function AuthAdminLayout({
       <div className="lg:w-1/2 lg:ml-auto  items-center justify-center mt-10 md:mt-auto my-auto bg-gray-50 lg:overflow-auto">
         {children}
       </div>
+      <ToastContainer />
     </div>
   );
 }

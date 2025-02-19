@@ -33,7 +33,9 @@ export class AuthAdminController {
       });
 
       await admin.save();
-      res.status(201).json({ msg: "Admin registrado correctamente" });
+      res
+        .status(201)
+        .json("Admin registrado correctamente, revisa correo para confirmar");
     } catch (error) {
       // console.log(error);
       res.status(500).json({ error: "Ocurrio un error en el servidor" });
@@ -56,7 +58,7 @@ export class AuthAdminController {
 
       await user.save();
 
-      res.json({ msg: "Cuenta confirmada correctamente" });
+      res.json("Cuenta confirmada correctamente");
     } catch (error) {
       console.log(error);
       res.status(500).json({ error: "Ocurrio un error en el servidor" });

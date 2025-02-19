@@ -1,10 +1,26 @@
 "use client";
-import { useState } from "react";
+import { loginAdmin } from "@/actions/login-account-admin-action";
+import { useActionState, useEffect, useState } from "react";
 import { FaEye } from "react-icons/fa";
 import { LuEyeClosed } from "react-icons/lu";
+import { toast } from "react-toastify";
 
 export default function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
+  const [state, dispatch] = useActionState(loginAdmin, {
+    errors: [],
+    success: "",
+  });
+  useEffect(() => {
+    if (state.errors) {
+      state.errors.forEach((error) => {
+        toast.error(error);
+      });
+    }
+    if (state.success) {
+      toast.success(state.success);
+    }
+  }, [state]);
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -13,7 +29,7 @@ export default function LoginForm() {
     <div className="flex justify-center items-center  ">
       <form
         className="p-4 m-2 border border-gray-800 rounded-md min-w-80 shadow-lg"
-        action=""
+        action={dispatch}
         noValidate
       >
         {/* Campo Email */}
