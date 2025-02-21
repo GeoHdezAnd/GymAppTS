@@ -1,5 +1,5 @@
 "use client";
-import { loginAdmin } from "@/actions/login-account-admin-action";
+import { loginAdmin } from "@/actions/admin/login-account-admin-action";
 import { useActionState, useEffect, useState } from "react";
 import { FaEye } from "react-icons/fa";
 import { LuEyeClosed } from "react-icons/lu";
@@ -9,16 +9,12 @@ export default function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [state, dispatch] = useActionState(loginAdmin, {
     errors: [],
-    success: "",
   });
   useEffect(() => {
     if (state.errors) {
       state.errors.forEach((error) => {
         toast.error(error);
       });
-    }
-    if (state.success) {
-      toast.success(state.success);
     }
   }, [state]);
 

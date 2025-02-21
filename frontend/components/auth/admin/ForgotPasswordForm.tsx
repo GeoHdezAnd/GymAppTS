@@ -1,11 +1,31 @@
 "use client";
 
+import forgotPassword from "@/actions/admin/forgot-password-account-action";
+import { useActionState, useEffect } from "react";
+import { toast } from "react-toastify";
+
 export default function ForgotPasswordForm() {
+  const [state, dispatch] = useActionState(forgotPassword, {
+    errors: [],
+    success: "",
+  });
+
+  useEffect(() => {
+    if (state.errors && state.errors.length > 0) {
+      state.errors.forEach((error) => {
+        toast.error(error);
+      });
+    }
+    if (state.success) {
+      toast.success(state.success);
+    }
+  }, [state]);
+
   return (
     <div className="flex justify-center items-center  ">
       <form
         className="p-4 m-2 border border-gray-800 rounded-md min-w-80 shadow-lg"
-        action=""
+        action={dispatch}
         noValidate
       >
         {/* Campo Email */}

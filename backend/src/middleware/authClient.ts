@@ -42,8 +42,13 @@ export const validateInputClientAuth = async (
     .withMessage("El telefono no es valido")
     .run(req);
   await body("fecha_nacimiento")
-    .isDate()
+    .isString()
     .withMessage("Fecha no valida")
+    .run(req);
+  await body("genero")
+    .isString()
+    .isLength({ min: 1, max: 1 })
+    .withMessage("Genero no valido")
     .run(req);
   await body("password")
     .isLength({ min: 8 })

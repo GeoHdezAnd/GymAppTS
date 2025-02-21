@@ -117,7 +117,7 @@ export class AuthAdminController {
         email: user.email,
         token: user.token,
       });
-      res.json({ msg: "Se le envio un correo con instrucciones" });
+      res.json("Se le envio un correo con instrucciones");
     } catch (error) {
       // console.log(error);
       res.status(500).json({ error: "Ocurrio un problema en el servidor" });

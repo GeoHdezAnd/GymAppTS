@@ -1,11 +1,14 @@
 "use server";
-import { ErrorSchema, RegisterAdminSchema, SuccessSchema } from "@/src/schemas";
+import { ErrorSchema, SuccessSchema } from "@/src/schemas";
+import { RegisterCustomerSchema } from "@/src/schemas/customer";
 
 export async function register(formData: FormData) {
   const registerData = {
     nombre: formData.get("nombre"),
     apellido_paterno: formData.get("apellido_paterno"),
     apellido_materno: formData.get("apellido_materno"),
+    fecha_nacimiento: formData.get("fecha_nacimiento"),
+    genero: formData.get("genero"),
     telefono: formData.get("telefono"),
     email: formData.get("email"),
     password: formData.get("password"),
@@ -13,7 +16,7 @@ export async function register(formData: FormData) {
   };
 
   // Validar
-  const register = RegisterAdminSchema.safeParse(registerData);
+  const register = RegisterCustomerSchema.safeParse(registerData);
 
   if (!register.success) {
     const errors = register.error.errors.map((error) => error.message);
@@ -21,7 +24,7 @@ export async function register(formData: FormData) {
   }
 
   // Registrar admin
-  const url = `${process.env.API_URL}/auth/admin`;
+  const url = `${process.env.API_URL}/auth/client`;
   const req = await fetch(url, {
     method: "POST",
     headers: {
@@ -31,13 +34,15 @@ export async function register(formData: FormData) {
       nombre: register.data.nombre,
       apellido_paterno: register.data.apellido_paterno,
       apellido_materno: register.data.apellido_materno,
+      fecha_nacimiento: register.data.fecha_nacimiento,
+      genero: register.data.genero,
       telefono: register.data.telefono,
       email: register.data.email,
       password: register.data.password,
     }),
   });
   const json = await req.json();
-  if (req.status === 409) {
+  if (req.status === 409 || req.status === 500 ) {
     const error = ErrorSchema.parse(json);
     return {
       errors: [error.error],

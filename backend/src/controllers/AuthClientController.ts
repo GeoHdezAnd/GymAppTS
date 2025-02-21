@@ -74,11 +74,9 @@ export class AuthClientController {
       });
 
       await client.save();
-      res
-        .status(201)
-        .json({ msg: "Registrado correctamente revise su correo" });
+      res.status(201).json("Registrado correctamente revise su correo");
     } catch (error) {
-      // console.log(error);
+      console.log(error);
       res.status(500).json({ error: "Ocurrio un error en el servidor" });
     }
   };

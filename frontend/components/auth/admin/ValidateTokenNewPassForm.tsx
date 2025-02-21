@@ -1,16 +1,27 @@
 "use client";
-import { confirmAccount } from "@/actions/admin/confirm-account-action";
+import validateToken from "@/actions/admin/validate-token-action";
 import { PinInput, PinInputField } from "@chakra-ui/pin-input";
-import { useRouter } from "next/navigation";
-import { startTransition, useActionState, useEffect, useState } from "react";
+import {
+  startTransition,
+  useActionState,
+  useEffect,
+  useState,
+  Dispatch,
+  SetStateAction,
+} from "react";
 import { toast } from "react-toastify";
 
-export default function ConfirmAccountForm() {
-  const router = useRouter();
+type ValidateTokenFromProps = {
+  setTokenValid: Dispatch<SetStateAction<boolean>>;
+};
+
+export default function ValidateTokenNewPassForm(
+  {setTokenValid}: ValidateTokenFromProps
+) {
   const [token, setToken] = useState("");
   const [isComplete, setIsComplete] = useState(false);
-  const confirmAccountWithToken = confirmAccount.bind(null, token); // Bind es para pasar valores adicionales a nuestro serverAction
-  const [state, dispatch] = useActionState(confirmAccountWithToken, {
+  const validateTokenInput = validateToken.bind(null, token);
+  const [state, dispatch] = useActionState(validateTokenInput, {
     errors: [],
     success: "",
   });
@@ -30,13 +41,10 @@ export default function ConfirmAccountForm() {
       });
     }
     if (state.success) {
-      toast.success(state.success, {
-        onClose: () => {
-          router.push("/auth/admin/login");
-        },
-      });
+      toast.success(state.success);
+      setTokenValid(true);
     }
-  }, [state, router]);
+  }, [state, setTokenValid]);
 
   const toggleToken = (token: string) => {
     setIsComplete(false);

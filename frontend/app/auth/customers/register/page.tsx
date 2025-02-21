@@ -1,9 +1,9 @@
+import RegisterForm from "@/components/auth/customers/RegisterForm";
 import type { Metadata } from "next";
 import Link from "next/link";
-import RegisterForm from "@/components/auth/admin/RegisterForm";
 
 export const metadata: Metadata = {
-  title: "GymApp Admin - Crear Cuenta",
+  title: "GymApp User - Crear Cuenta",
   description: "GymApp - Crear Cuenta",
 };
 
@@ -14,11 +14,11 @@ export default function RegisterPage() {
         <h1 className="font-bold text-3xl">Registro</h1>
         <p className="">
           Ingresa tu información para{" "}
-          <span className="font-bold">administrar el gym</span>
+          <span className="font-bold">crear cuenta como cliente</span>
         </p>
       </div>
-
       <RegisterForm />
+
       <nav className="grid justify-center text-center my-5">
         <Link href="/auth/admin/login" className="text-gray-700">
           ¿Quieres iniciar sesión?{" "}

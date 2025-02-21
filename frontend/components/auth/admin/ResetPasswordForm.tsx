@@ -1,14 +1,10 @@
 "use client";
-import { register } from "@/actions/admin/create-account-admin-action";
-import { useRef, useState } from "react";
+import { useState } from "react";
+import { BsChevronCompactDown, BsChevronCompactUp } from "react-icons/bs";
 import { FaEye } from "react-icons/fa";
 import { LuEyeClosed } from "react-icons/lu";
-import ErrorMessage from "@/components/ui/ErrorMessage";
-import SuccessMessage from "@/components/ui/SuccessMessage";
-import { BsChevronCompactDown, BsChevronCompactUp } from "react-icons/bs";
 
-export default function RegisterForm() {
-  const ref = useRef<HTMLFormElement>(null);
+export default function ResetPasswordForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [showPasswordConf, setShowPasswordConf] = useState(false);
   const [password, setPassword] = useState("");
@@ -20,38 +16,6 @@ export default function RegisterForm() {
     uppercase: false,
     number: false,
   });
-  const [state, setState] = useState<{
-    errors: string[];
-    success: string;
-  }>({
-    errors: [],
-    success: "",
-  });
-
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault(); // Evita el reinicio automático del formulario
-
-    const formData = new FormData(event.currentTarget);
-    const result = await register(formData); // Ejecuta la Server Action
-
-    if (result.success) {
-      // Reinicia el formulario solo si la acción fue exitosa
-      ref.current?.reset();
-      setPassword("");
-      setPasswordConfirm("");
-      setShowStrength(false);
-      setPasswordStrength({
-        length: false,
-        specialChar: false,
-        uppercase: false,
-        number: false,
-      });
-      setShowPassword(false);
-      setShowPasswordConf(false);
-    }
-
-    setState(result); // Actualiza el estado con la respuesta
-  };
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -71,7 +35,6 @@ export default function RegisterForm() {
     const value = e.target.value;
     setPasswordConfirm(value);
   };
-
   const validatePassword = (value: string) => {
     const strength = {
       length: value.length >= 8,
@@ -93,88 +56,12 @@ export default function RegisterForm() {
   const validSamePasswords = password === passwordConfirm;
 
   return (
-    <div className="flex justify-center items-center my-auto">
+    <div className="flex justify-center items-center  ">
       <form
         className="p-4 m-2 border border-gray-800 rounded-md min-w-80 shadow-lg"
-        onSubmit={handleSubmit} // Usa onSubmit en lugar de action
-        ref={ref}
+        action={""}
         noValidate
       >
-        {state.errors.map((error, index) => (
-          <ErrorMessage key={index}>{error}</ErrorMessage>
-        ))}
-        {state.success && <SuccessMessage>{state.success}</SuccessMessage>}
-        {/* Campo Nombre */}
-        <div className="mb-2">
-          <label htmlFor="nombre" className="form-label">
-            Nombre(s)
-          </label>
-          <input
-            className="form-input"
-            type="text"
-            name="nombre"
-            id="nombre"
-            placeholder="Ingresa tu nombre"
-          />
-        </div>
-
-        {/* Campo de apellidos */}
-        <div className="mb-2 flex gap-2">
-          <div className="m-auto w-full">
-            <label htmlFor="apellido_paterno" className="form-label">
-              Apellido paterno
-            </label>
-            <input
-              className="form-input"
-              type="text"
-              name="apellido_paterno"
-              id="apellido_paterno"
-              placeholder="Ingresa tu apellido paterno"
-            />
-          </div>
-          <div className="m-auto w-full">
-            <label htmlFor="apellido_materno" className="form-label">
-              Apellido materno
-            </label>
-            <input
-              className="form-input"
-              type="text"
-              name="apellido_materno"
-              id="apellido_materno"
-              placeholder="Ingresa tu apellido"
-            />
-          </div>
-        </div>
-
-        {/* Campo telefono */}
-        <div className="mb-2">
-          <label htmlFor="telefono" className="form-label">
-            Telefono
-          </label>
-          <input
-            className="form-input"
-            type="tel"
-            name="telefono"
-            id="telefono"
-            maxLength={10}
-            placeholder="Ingresa tu telefono"
-          />
-        </div>
-
-        {/* Campo Email */}
-        <div className="mb-2">
-          <label htmlFor="email" className="form-label">
-            Email
-          </label>
-          <input
-            className="form-input"
-            type="email"
-            name="email"
-            id="email"
-            placeholder="Ingresa tu email"
-          />
-        </div>
-
         {/* Campo Contraseña */}
         <div className="mb-2 relative">
           <label htmlFor="password" className="form-label">
