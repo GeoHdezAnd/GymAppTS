@@ -1,7 +1,8 @@
+
 export default async function AdminPage() {
   return (
     <div>
-      <h1>Hola este es el panel de administracion</h1>
+      <h2 className="font-bold text-xl">¡Bienvenido al panel de administración!</h2>
     </div>
   );
 }

@@ -162,7 +162,7 @@ export class AuthAdminController {
 
       await user.save();
 
-      res.status(200).json({ msg: "Contraseña modificada correctamente" });
+      res.status(200).json("Contraseña modificada correctamente");
     } catch (error) {
       // console.log(error);
       res.status(500).json({ error: "Ocurrio un error en el servidor" });
@@ -190,7 +190,7 @@ export class AuthAdminController {
       user.password = await hashPassword(password);
 
       await user.save();
-      res.json({ msg: "Contraseña modificada correctamente" });
+      res.json("Contraseña modificada correctamente");
     } catch (error) {
       // console.log(error);
       res.status(500).json({ error: "Ocurrio un error en el servidor" });
@@ -208,7 +208,7 @@ export class AuthAdminController {
         res.status(401).json({ msg: error.message });
         return;
       }
-      res.json({ msg: "Contraseña correcta" });
+      res.json("Contraseña correcta");
     } catch (error) {
       // console.log(error);
       res.status(500).json({ error: "Ocurrio un error en el servidor" });

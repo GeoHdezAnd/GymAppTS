@@ -21,7 +21,7 @@ export class MembershipController {
     try {
       const membership = new Membresia(req.body);
       await membership.save();
-      res.status(201).json({ msg: "Membresia creada correctamente" });
+      res.status(201).json("Membresia creada correctamente");
     } catch (error) {
       // console.log(error)
       res.status(500).json({ error: "Ocurrió un error" });
@@ -35,7 +35,7 @@ export class MembershipController {
   static updateById = async (req: Request, res: Response) => {
     try {
       await req.membership.update(req.body);
-      res.json({ msg: "Membresia actualizada correctamente" });
+      res.json("Membresia actualizada correctamente");
     } catch (error) {
       // console.log(error)
       res.status(500).json({ error: "Ocurrió un error" });
@@ -48,7 +48,7 @@ export class MembershipController {
       await req.membership.update({
         eliminado,
       });
-      res.status(201).json({ msg: "Membresia eliminada" });
+      res.status(201).json("Membresia eliminada");
     } catch (error) {
       // console.log(error)
       res.status(500).json({ error: "Ocurrió un error" });

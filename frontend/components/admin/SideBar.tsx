@@ -1,7 +1,10 @@
 "use client";
 import { MdSpaceDashboard } from "react-icons/md";
-
+import { HiUserGroup } from "react-icons/hi";
+import { BsFillPostcardFill } from "react-icons/bs";
+import { AiFillSetting } from "react-icons/ai";
 import { useState } from "react";
+import Link from "next/link";
 import Logo from "../ui/Logo";
 import AdminMenu from "./AdminMenu";
 import { Admin } from "@/src/schemas/admin";
@@ -71,28 +74,42 @@ export default function SideBar({
             {/* Menú del Sidebar */}
             <nav className="mt-6 ">
               <ul>
-                <li className="mb-2  flex items-center hover:bg-gray-700 rounded pl-2">
-                  <MdSpaceDashboard />
-
-                  <a href="#" className="flex items-center p-2 text-gray-300 ">
+                <li className="mb-2">
+                  <Link
+                    href="/admin"
+                    className="flex items-center gap-2  p-2 text-gray-300 hover:bg-gray-700 rounded"
+                  >
+                    <MdSpaceDashboard />
                     <span>Inicio</span>
-                  </a>
+                  </Link>
                 </li>
                 <li className="mb-2">
-                  <a
-                    href="#"
-                    className="flex items-center p-2 text-gray-300 hover:bg-gray-700 rounded"
+                  <Link
+                    href="/admin/customers"
+                    className="flex items-center gap-2  p-2 text-gray-300 hover:bg-gray-700 rounded"
                   >
-                    <span>Usuarios</span>
-                  </a>
+                    <HiUserGroup />
+                    <span>Clientes</span>
+                  </Link>
                 </li>
                 <li className="mb-2">
-                  <a
-                    href="#"
-                    className="flex items-center p-2 text-gray-300 hover:bg-gray-700 rounded"
+                  <Link
+                    href="/admin/memberships"
+                    className="flex items-center gap-2  p-2 text-gray-300 hover:bg-gray-700 rounded"
                   >
+                    <BsFillPostcardFill />
+
+                    <span>Membresias</span>
+                  </Link>
+                </li>
+                <li className="mb-2">
+                  <Link
+                    href="#"
+                    className="flex items-center gap-2  p-2 text-gray-300 hover:bg-gray-700 rounded"
+                  >
+                    <AiFillSetting />
                     <span>Configuración</span>
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </nav>

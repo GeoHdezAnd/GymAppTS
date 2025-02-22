@@ -1,22 +1,51 @@
-"use client";
-import { useState } from "react";
+// NO ES NECESARIO VOLVER A NOMBRARLO CLIENT COMPONENT PORQUE SU PADRE YA LO ES
+import resetPassword from "@/actions/admin/reset-password-action";
+import { useRouter } from "next/navigation";
+import { useActionState, useEffect, useState } from "react";
 import { BsChevronCompactDown, BsChevronCompactUp } from "react-icons/bs";
 import { FaEye } from "react-icons/fa";
 import { LuEyeClosed } from "react-icons/lu";
+import { toast } from "react-toastify";
 
-export default function ResetPasswordForm() {
+export default function ResetPasswordForm({ token }: { token: string }) {
+  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [showPasswordConf, setShowPasswordConf] = useState(false);
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
   const [showStrength, setShowStrength] = useState(false);
+
   const [passwordStrength, setPasswordStrength] = useState({
     length: false,
     specialChar: false,
     uppercase: false,
     number: false,
   });
+  const resetPasswordWithToken = resetPassword.bind(null, token);
+  const [state, dispatch] = useActionState(resetPasswordWithToken, {
+    errors: [],
+    success: "",
+  });
 
+  useEffect(() => {
+    if (state.errors) {
+      state.errors.forEach((error) => {
+        toast.error(error);
+      });
+    }
+    if (state.success) {
+      toast.success(state.success, {
+        onClose: () => {
+          router.push("/auth/admin/login");
+        },
+        onClick: () => {
+          router.push("/auth/admin/login");
+        },
+      });
+    }
+  }, [state, router]);
+
+  //TODO: Mandar a traer el action server para usarlo
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
@@ -59,7 +88,7 @@ export default function ResetPasswordForm() {
     <div className="flex justify-center items-center  ">
       <form
         className="p-4 m-2 border border-gray-800 rounded-md min-w-80 shadow-lg"
-        action={""}
+        action={dispatch}
         noValidate
       >
         {/* Campo Contraseña */}
@@ -173,8 +202,8 @@ export default function ResetPasswordForm() {
           <input
             className="form-input pr-10"
             type={showPasswordConf ? "text" : "password"}
-            name="password_confirm"
-            id="password_confirm"
+            name="password_confirmation"
+            id="password_confirmation"
             value={passwordConfirm}
             onChange={handlePasswordConfirmChange}
             placeholder="Confirma tu contraseña"

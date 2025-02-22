@@ -32,17 +32,17 @@ export default function AdminMenu({ admin }: { admin: Admin }) {
           <div className="w-56 shrink rounded-xl bg-white p-4 text-sm font-semibold leading-6 text-gray-900 shadow-lg ring-1 ring-gray-900/5">
             <p className={`block md:hidden`}>
               Hola:{" "}
-              {`${admin.nombre} ${admin.apellido_paterno} ${admin.apellido_paterno}`}
+              {`${admin.nombre} ${admin.apellido_paterno} ${admin.apellido_materno}`}
             </p>
             <Link
               href="/admin/profile/settings"
-              className="block p-2 hover:text-purple-950"
+              className="block p-2 hover:bg-gray-300 rounded-md transition- duration-300"
             >
               Mi Perfil
             </Link>
 
             <button
-              className="block p-2 hover:text-purple-950"
+              className="block p-2 hover:bg-gray-300 rounded-md w-full text-left  transition- duration-300"
               type="button"
               onClick={logout}
             >

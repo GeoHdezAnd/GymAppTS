@@ -74,12 +74,14 @@ export class ClientController {
         token: client.token,
       });
 
-      await client.save();
-      res.status(201).json({
-        msg: "Cliente registrado correctamente indique que revise su correo",
-      });
+      const newClient = await client.save();
+      res
+        .status(201)
+        .json(
+          `Cliente registrado correctamente MATRICULA: ${newClient.matricula}`
+        );
     } catch (error) {
-      // console.log(error);
+      console.log(error);
       res.status(500).json({ error: "Ocurrio un error en el servidor" });
     }
   };

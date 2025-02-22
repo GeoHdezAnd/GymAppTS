@@ -7,10 +7,9 @@ import { limiter } from "../config/limiter";
 
 const router = Router();
 
-router.use(limiter);
-
 router.post(
   "/",
+  limiter,
   validateInputAdminAuth,
   handleInputErrors,
   AuthAdminController.create
@@ -18,6 +17,7 @@ router.post(
 
 router.post(
   "/confirm-account",
+  limiter,
   body("token")
     .notEmpty()
     .withMessage("Token no valido")
@@ -28,6 +28,7 @@ router.post(
 );
 router.post(
   "/login",
+  limiter,
   body("email").isEmail().withMessage("Email no valido"),
   body("password").notEmpty().withMessage("Contraseña no valida"),
   handleInputErrors,
@@ -35,6 +36,7 @@ router.post(
 );
 router.post(
   "/forgot-password",
+  limiter,
   body("email").isEmail().withMessage("El email no es valido"),
   handleInputErrors,
   AuthAdminController.forgotPassword
@@ -42,6 +44,7 @@ router.post(
 
 router.post(
   "/validate-token",
+  limiter,
   body("token")
     .notEmpty()
     .withMessage("Token no valido")
@@ -53,6 +56,7 @@ router.post(
 
 router.post(
   "/reset-password/:token",
+  limiter,
   param("token")
     .notEmpty()
     .withMessage("Token no valido")
@@ -77,6 +81,7 @@ router.get("/", authenticate, AuthAdminController.admin);
 
 router.post(
   "/update-password",
+  limiter,
   body("current_password")
     .notEmpty()
     .withMessage("La contraseña actual no puede ser vacia"),
@@ -98,6 +103,7 @@ router.post(
 
 router.post(
   "/check-password",
+  limiter,
   authenticate,
   body("password").notEmpty().withMessage("La contraseña no puede estar vacia"),
   handleInputErrors,
