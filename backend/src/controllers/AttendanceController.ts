@@ -63,7 +63,7 @@ export class AttendanceController {
       });
       await attendance.save();
 
-      res.json({ msg: "Asistencia creada correctamente" });
+      res.json("Asistencia creada correctamente");
     } catch (error) {
       // console.log(error);
       res.status(500).json({ error: "Ocurrio un error en el servido" });

@@ -24,7 +24,7 @@ SELECT
 FROM
   ventas_membresia vm
   JOIN cliente c ON vm.cliente_id = c.id
-  JOIN membresia m ON vm.membresia_id = m.id;
+  JOIN membresia m ON vm.membresia_id = m.id
   ORDER BY
   c.id, vm.fecha_compra DESC;
 

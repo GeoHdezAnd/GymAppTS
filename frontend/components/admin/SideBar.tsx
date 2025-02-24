@@ -5,6 +5,7 @@ import { BsFillPostcardFill } from "react-icons/bs";
 import { AiFillSetting } from "react-icons/ai";
 import { useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import Logo from "../ui/Logo";
 import AdminMenu from "./AdminMenu";
 import { Admin } from "@/src/schemas/admin";
@@ -17,10 +18,12 @@ export default function SideBar({
   admin: Admin;
 }>) {
   const [sideBarActive, setSideBarActive] = useState(false);
+  const pathname = usePathname();
 
   const toggleSideBarState = () => {
     setSideBarActive(!sideBarActive);
   };
+
   return (
     <>
       {/* Header */}
@@ -77,7 +80,9 @@ export default function SideBar({
                 <li className="mb-2">
                   <Link
                     href="/admin"
-                    className="flex items-center gap-2  p-2 text-gray-300 hover:bg-gray-700 rounded"
+                    className={`flex items-center gap-2 p-2 text-gray-300 hover:bg-gray-700 rounded ${
+                      pathname === "/admin" ? "bg-gray-700" : ""
+                    }`}
                   >
                     <MdSpaceDashboard />
                     <span>Inicio</span>
@@ -86,7 +91,9 @@ export default function SideBar({
                 <li className="mb-2">
                   <Link
                     href="/admin/customers"
-                    className="flex items-center gap-2  p-2 text-gray-300 hover:bg-gray-700 rounded"
+                    className={`flex items-center gap-2 p-2 text-gray-300 hover:bg-gray-700 rounded ${
+                      pathname === "/admin/customers" ? "bg-gray-700" : ""
+                    }`}
                   >
                     <HiUserGroup />
                     <span>Clientes</span>
@@ -95,17 +102,20 @@ export default function SideBar({
                 <li className="mb-2">
                   <Link
                     href="/admin/memberships"
-                    className="flex items-center gap-2  p-2 text-gray-300 hover:bg-gray-700 rounded"
+                    className={`flex items-center gap-2 p-2 text-gray-300 hover:bg-gray-700 rounded ${
+                      pathname === "/admin/memberships" ? "bg-gray-700" : ""
+                    }`}
                   >
                     <BsFillPostcardFill />
-
                     <span>Membresias</span>
                   </Link>
                 </li>
                 <li className="mb-2">
                   <Link
                     href="#"
-                    className="flex items-center gap-2  p-2 text-gray-300 hover:bg-gray-700 rounded"
+                    className={`flex items-center gap-2 p-2 text-gray-300 hover:bg-gray-700 rounded ${
+                      pathname === "#" ? "bg-gray-700" : ""
+                    }`}
                   >
                     <AiFillSetting />
                     <span>Configuración</span>
