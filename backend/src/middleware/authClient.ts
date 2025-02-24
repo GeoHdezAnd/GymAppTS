@@ -88,13 +88,9 @@ export const authenticate = async (
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     if (typeof decoded === "object" && decoded.id) {
       req.client = await Cliente.findByPk(decoded.id, {
-        attributes: [
-          "id",
-          "nombre",
-          "apellido_paterno",
-          "apellido_materno",
-          "email",
-        ],
+        attributes: {
+          exclude: ["password", "token", "createdAt", "updatedAt"],
+        },
       });
       next();
     }

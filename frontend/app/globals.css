@@ -9,7 +9,7 @@
 
 .btn-global:hover,
 .btn-global.active {
-  @apply bg-opacity-15 bg-white text-black border-black;
+  @apply  bg-white text-black border-black;
   animation: lift 0.3s ease forwards;
 }
 
@@ -46,4 +46,21 @@
     transform: translateY(0) scale(1);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   }
+}
+
+/* ANIMATION PHOTO AND QR CARD*/
+.perspective {
+  perspective: 1000px;
+}
+
+.transform-style-3d {
+  transform-style: preserve-3d;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+}
+
+.rotate-y-180 {
+  transform: rotateY(180deg);
 }

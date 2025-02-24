@@ -1,5 +1,5 @@
 
-import validateToken from "@/actions/admin/validate-token-action";
+import validateToken from "@/actions/admin/auth/validate-token-action";
 import { PinInput, PinInputField } from "@chakra-ui/pin-input";
 import {
   startTransition,

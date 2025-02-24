@@ -1,6 +1,6 @@
 "use client";
 
-import forgotPassword from "@/actions/admin/forgot-password-account-action";
+import forgotPassword from "@/actions/admin/auth/forgot-password-account-action";
 import { useActionState, useEffect } from "react";
 import { toast } from "react-toastify";
 

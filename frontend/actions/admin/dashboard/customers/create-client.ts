@@ -1,8 +1,7 @@
 "use server";
-
+import getToken from "@/src/auth/token";
 import { ErrorSchema, SuccessSchema } from "@/src/schemas";
 import { NewClientSchema } from "@/src/schemas/admin/dashboard";
-import { cookies } from "next/headers";
 
 type ActionStateType = {
   errors: string[];
@@ -31,8 +30,7 @@ export default async function createNewClient(
       success: "",
     };
   }
-  const cookiesStore = await cookies();
-  const token = cookiesStore.get("GYMAPP_TOKEN")?.value;
+  const token = await getToken();
   const url = `${process.env.API_URL}/client`;
   const req = await fetch(url, {
     method: "POST",

@@ -14,7 +14,7 @@ export class ClientController {
           eliminado: false,
         },
         attributes: {
-          exclude: ["password", "token"],
+          exclude: ["password", "token", "confirmado", "eliminado"],
         },
         order: [["createdAt", "ASC"]],
       });
@@ -99,7 +99,7 @@ export class ClientController {
         return;
       }
       await req.client.update(req.body);
-      res.json({ msg: "Cliente actualizado correctamente" });
+      res.json("Cliente actualizado correctamente" );
     } catch (error) {
       // console.log(error)
       res.status(500).json({ error: "Ocurrió un error" });
@@ -112,7 +112,7 @@ export class ClientController {
       await req.client.update({
         eliminado,
       });
-      res.status(201).json({ msg: "Cliente eliminado" });
+      res.status(201).json("Cliente eliminado" );
     } catch (error) {
       // console.log(error)
       res.status(500).json({ error: "Ocurrió un error" });

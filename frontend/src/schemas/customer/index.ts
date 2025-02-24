@@ -32,3 +32,19 @@ export const RegisterCustomerSchema = z
     message: "Los passwords no coinciden",
     path: ["password_confirm"],
   });
+
+export const CustomerAPIResponseSchema = z.object({
+  id: z.number(),
+  nombre: z.string(),
+  apellido_paterno: z.string(),
+  apellido_materno: z.string(),
+  genero: z.string(),
+  email: z.string(),
+  telefono: z.string(),
+  fecha_nacimiento: z.string(),
+  matricula: z.string(),
+});
+
+export const CustomersAPIResponseSchema = z.array(CustomerAPIResponseSchema);
+
+export type Customer = z.infer<typeof CustomerAPIResponseSchema>

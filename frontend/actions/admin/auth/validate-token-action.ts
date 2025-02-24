@@ -8,7 +8,7 @@ type ActionStateType = {
 };
 
 export default async function validateToken(
-  token: string,
+  token: string
 ): Promise<ActionStateType> {
   const validateToken = TokenSchema.safeParse(token);
   if (!validateToken.success) {

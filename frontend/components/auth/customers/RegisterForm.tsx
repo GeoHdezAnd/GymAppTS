@@ -1,11 +1,10 @@
 "use client";
-import { register } from "@/actions/customer/create-account-customer-action";
-import { useRef, useState } from "react";
+import { register } from "@/actions/customer/auth/create-account-action";
+import { useEffect, useRef, useState } from "react";
 import { FaEye } from "react-icons/fa";
 import { LuEyeClosed } from "react-icons/lu";
-import ErrorMessage from "@/components/ui/ErrorMessage";
-import SuccessMessage from "@/components/ui/SuccessMessage";
 import { BsChevronCompactDown, BsChevronCompactUp } from "react-icons/bs";
+import { toast } from "react-toastify";
 
 export default function RegisterForm() {
   const ref = useRef<HTMLFormElement>(null);
@@ -27,6 +26,17 @@ export default function RegisterForm() {
     errors: [],
     success: "",
   });
+
+  useEffect(() => {
+    if (state.errors && state.errors.length > 0) {
+      state.errors.forEach((error) => {
+        toast.error(error);
+      });
+    }
+    if (state.success) {
+      toast.success(state.success);
+    }
+  }, [state]);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault(); // Evita el reinicio automático del formulario
@@ -100,10 +110,6 @@ export default function RegisterForm() {
         ref={ref}
         noValidate
       >
-        {state.errors.map((error, index) => (
-          <ErrorMessage key={index}>{error}</ErrorMessage>
-        ))}
-        {state.success && <SuccessMessage>{state.success}</SuccessMessage>}
         {/* Campo Nombre */}
         <div className="mb-2">
           <label htmlFor="nombre" className="form-label">
@@ -119,7 +125,7 @@ export default function RegisterForm() {
         </div>
 
         {/* Campo de apellidos */}
-        <div className="mb-2 flex gap-2">
+        <div className="mb-2 grid md:flex gap-2">
           <div className="m-auto w-full">
             <label htmlFor="apellido_paterno" className="form-label">
               Apellido paterno
@@ -145,7 +151,7 @@ export default function RegisterForm() {
             />
           </div>
         </div>
-        <div className="mb-2 flex w-full gap-2">
+        <div className="mb-2 grid md:flex  w-full gap-2">
           {/* Campo Fecha nacimiento */}
           <div className="w-full">
             <label htmlFor="fecha_nacimiento" className="form-label">

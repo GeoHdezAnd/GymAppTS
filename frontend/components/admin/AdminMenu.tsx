@@ -10,7 +10,7 @@ import {
 import Link from "next/link";
 import Logo from "../ui/Logo";
 import { Admin } from "@/src/schemas/admin";
-import logout from "@/actions/admin/logout-admin-action";
+import logout from "@/actions/admin/auth/logout-action";
 
 export default function AdminMenu({ admin }: { admin: Admin }) {
   return (

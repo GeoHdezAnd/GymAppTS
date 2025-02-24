@@ -1,8 +1,8 @@
 import ConfirmAccountForm from "@/components/auth/admin/ConfirmAccountForm";
 import { Metadata } from "next";
 export const metadata: Metadata = {
-  title: "GymApp - Confirm Account",
-  description: "GymApp - Confirm Account",
+  title: "ADMIN- Confirm Account",
+  description: "GYM APP",
 };
 
 export default function ConfirmAccountPage() {

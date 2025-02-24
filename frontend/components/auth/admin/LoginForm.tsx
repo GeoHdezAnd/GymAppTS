@@ -1,5 +1,5 @@
 "use client";
-import { loginAdmin } from "@/actions/admin/login-account-admin-action";
+import { loginAdmin } from "@/actions/admin/auth/login-account-admin-action";
 import { useActionState, useEffect, useState } from "react";
 import { FaEye } from "react-icons/fa";
 import { LuEyeClosed } from "react-icons/lu";

@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 import { Cliente } from "../models/Cliente";
 import { checkPassword, createMatricula, hashPassword } from "../utils/auth";
 import { generateToken } from "../utils/token";
-import { AuthEmail } from "../emails/Email";
+import { AuthEmail } from "../emails/EmailClient";
 import { generateJWT } from "../utils/jwt";
 
 export class AuthClientController {
@@ -74,7 +74,7 @@ export class AuthClientController {
       });
 
       await client.save();
-      res.status(201).json("Registrado correctamente revise su correo");
+      res.status(201).json("Registrado correctamente, revise su correo");
     } catch (error) {
       console.log(error);
       res.status(500).json({ error: "Ocurrio un error en el servidor" });
@@ -98,7 +98,7 @@ export class AuthClientController {
 
       await user.save();
 
-      res.json({ msg: "Cuenta confirmada correctamente" });
+      res.json("Cuenta confirmada correctamente");
     } catch (error) {
       // console.log(error)
       res.status(500).json({ error: "Ocurrio un error en el servidor" });
@@ -159,7 +159,7 @@ export class AuthClientController {
         email: user.email,
         token: user.token,
       });
-      res.json({ msg: "Se le envio un correo con instrucciones" });
+      res.json("Se le envio un correo con instrucciones");
     } catch (error) {
       // console.log(error);
       res.status(500).json({ error: "Ocurrio un problema en el servidor" });
@@ -204,7 +204,7 @@ export class AuthClientController {
 
       await user.save();
 
-      res.status(200).json({ msg: "Contraseña modificada correctamente" });
+      res.status(200).json("Contraseña modificada correctamente");
     } catch (error) {
       // console.log(error);
       res.status(500).json({ error: "Ocurrio un error en el servidor" });
@@ -232,7 +232,7 @@ export class AuthClientController {
       user.password = await hashPassword(password);
 
       await user.save();
-      res.json({ msg: "Contraseña modificada correctamente" });
+      res.json("Contraseña modificada correctamente");
     } catch (error) {
       // console.log(error);
       res.status(500).json({ error: "Ocurrio un error en el servidor" });
@@ -250,7 +250,7 @@ export class AuthClientController {
         res.status(401).json({ msg: error.message });
         return;
       }
-      res.json({ msg: "Contraseña correcta" });
+      res.json("Contraseña correcta");
     } catch (error) {
       // console.log(error);
       res.status(500).json({ error: "Ocurrio un error en el servidor" });

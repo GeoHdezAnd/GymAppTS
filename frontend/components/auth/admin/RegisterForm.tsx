@@ -1,5 +1,5 @@
 "use client";
-import { register } from "@/actions/admin/create-account-admin-action";
+import { register } from "@/actions/admin/auth/create-account-action";
 import { useRef, useState } from "react";
 import { FaEye } from "react-icons/fa";
 import { LuEyeClosed } from "react-icons/lu";
@@ -93,7 +93,7 @@ export default function RegisterForm() {
   const validSamePasswords = password === passwordConfirm;
 
   return (
-    <div className="flex justify-center items-center my-auto">
+    <div className="flex justify-center items-center my-auto ">
       <form
         className="p-4 m-2 border border-gray-800 rounded-md min-w-80 shadow-lg"
         onSubmit={handleSubmit} // Usa onSubmit en lugar de action

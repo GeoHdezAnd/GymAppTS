@@ -1,5 +1,5 @@
 "use client";
-import { confirmAccount } from "@/actions/admin/confirm-account-action";
+import { confirmAccount } from "@/actions/admin/auth/confirm-account-action";
 import { PinInput, PinInputField } from "@chakra-ui/pin-input";
 import { useRouter } from "next/navigation";
 import { startTransition, useActionState, useEffect, useState } from "react";

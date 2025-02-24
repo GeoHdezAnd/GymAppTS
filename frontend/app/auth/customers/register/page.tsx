@@ -3,14 +3,14 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "GymApp User - Crear Cuenta",
-  description: "GymApp - Crear Cuenta",
+  title: "USER - Crear Cuenta",
+  description: "GymAPP",
 };
 
 export default function RegisterPage() {
   return (
     <>
-      <div className="flex flex-col justify-center text-center my-4">
+      <div className="flex flex-col justify-center text-center my-4 mx-2">
         <h1 className="font-bold text-3xl">Registro</h1>
         <p className="">
           Ingresa tu información para{" "}

@@ -30,7 +30,7 @@ export default function SideBar({
           <button
             type="button"
             onClick={toggleSideBarState}
-            className="text-gray-600 px-2 hover:text-gray-900 focus:outline-none block md:hidden"
+            className="text-white px-2 hover:text-gray-300 focus:outline-none block md:hidden"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"

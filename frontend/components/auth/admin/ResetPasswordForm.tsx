@@ -1,5 +1,5 @@
 // NO ES NECESARIO VOLVER A NOMBRARLO CLIENT COMPONENT PORQUE SU PADRE YA LO ES
-import resetPassword from "@/actions/admin/reset-password-action";
+import resetPassword from "@/actions/admin/auth/reset-password-action";
 import { useRouter } from "next/navigation";
 import { useActionState, useEffect, useState } from "react";
 import { BsChevronCompactDown, BsChevronCompactUp } from "react-icons/bs";
