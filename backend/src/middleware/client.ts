@@ -74,7 +74,18 @@ export const validateClientExist = async (
 ) => {
   try {
     const { clientID } = req.params;
-    const client = await Cliente.findByPk(clientID);
+    const client = await Cliente.findByPk(clientID, {
+      attributes: {
+        exclude: [
+          "confirmado",
+          "eliminado",
+          "password",
+          "token",
+          "createdAt",
+          "updatedAt",
+        ],
+      },
+    });
     if (!client) {
       const error = new Error("No existe el cliente");
       res.status(404).json({ error: error.message });

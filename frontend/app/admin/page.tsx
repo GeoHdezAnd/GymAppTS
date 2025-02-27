@@ -1,4 +1,4 @@
-import Principal from "@/components/admin/Principal";
+import Principal from "@/components/admin/principal/Principal";
 
 export default async function AdminPage() {
   return (

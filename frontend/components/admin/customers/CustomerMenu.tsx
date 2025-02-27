@@ -1,6 +1,4 @@
-"use client";
-import { Fragment } from "react";
-import Link from "next/link";
+import { Fragment, useState } from "react"; // Add useState
 import {
   Menu,
   MenuButton,
@@ -10,13 +8,40 @@ import {
 } from "@headlessui/react";
 import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
 import { Customer } from "@/src/schemas/customer";
+import { toast } from "react-toastify"; // Add toast for notifications
+import { deleteClientByID } from "@/actions/admin/dashboard/customers/delete-action";
 
-export default function CustomerMenu({
-  clientID,
-}: {
+interface Props {
   clientID: Customer["id"];
-}) {
-  console.log(clientID);
+  handleUpdateOpen: (id: number) => void;
+}
+
+export default function CustomerMenu({ clientID, handleUpdateOpen }: Props) {
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  const handleDelete = async () => {
+    const confirmDelete = window.confirm(
+      "¿Estás seguro de que deseas eliminar este cliente?"
+    );
+    if (!confirmDelete) return;
+
+    setIsDeleting(true); // Start loading
+    try {
+      const result = await deleteClientByID(clientID);
+
+      if (result.success) {
+        toast.success("Cliente eliminado correctamente");
+      } else {
+        toast.error(result.error || "Error al eliminar el cliente");
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Error al eliminar el cliente");
+    } finally {
+      setIsDeleting(false); // Stop loading
+    }
+  };
+
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div>
@@ -40,28 +65,22 @@ export default function CustomerMenu({
         <MenuItems className="absolute right-0 z-50 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-gray-900/5 focus:outline-none">
           <div className="py-1">
             <MenuItem>
-              <Link
-                href={``}
-                className="block md:hidden px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-              >
-                Ver cliente
-              </Link>
-            </MenuItem>
-            <MenuItem>
-              <Link
-                href={``}
-                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+              <button
+                type="button"
+                className="block w-full px-4 py-2 text-left text-sm text-gray-500 hover:bg-gray-100"
+                onClick={() => handleUpdateOpen(clientID)}
               >
                 Editar cliente
-              </Link>
+              </button>
             </MenuItem>
             <MenuItem>
               <button
                 type="button"
                 className="block w-full px-4 py-2 text-left text-sm text-red-500 hover:bg-gray-100"
-                onClick={() => {}}
+                onClick={handleDelete} // Call handleDelete on click
+                disabled={isDeleting} // Disable button while deleting
               >
-                Eliminar cliente
+                {isDeleting ? "Eliminando..." : "Eliminar cliente"}
               </button>
             </MenuItem>
           </div>

@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { body, param } from "express-validator";
 import { handleInputErrors } from "../middleware/Validation";
-import { limiter } from "../config/limiter";
+// import { limiter } from "../config/limiter";
 import { ClientController } from "../controllers/ClientController";
 import { authenticate } from "../middleware/authAdmin";
 import {
@@ -11,7 +11,7 @@ import {
 } from "../middleware/client";
 
 const router = Router();
-router.use(limiter);
+// router.use(limiter);
 
 router.param("clientID", validateClientID);
 router.param("clientID", validateClientExist);

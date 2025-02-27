@@ -14,13 +14,29 @@ import { Cliente } from "./Cliente";
 @Table({
   tableName: "asistencia",
   timestamps: false,
+  indexes: [
+    { fields: ["cliente_id"] }, 
+    { fields: ["fecha_asistencia"] }, 
+  ],
 })
 export class Asistencia extends Model {
   @Default(DataType.NOW)
   @Column({
-    type: DataType.DATE,
+    type: DataType.DATEONLY,
   })
-  declare fecha_asistencia: Date;
+  declare fecha_asistencia: string;
+
+  @Default(DataType.NOW)
+  @Column({
+    type: DataType.TIME,
+  })
+  declare hora_entrada: string;
+
+  @Default(null)
+  @Column({
+    type: DataType.TIME,
+  })
+  declare hora_salida: string;
 
   @ForeignKey(() => Cliente)
   @AllowNull(false)

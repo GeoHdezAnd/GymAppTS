@@ -3,7 +3,7 @@ import { Op } from "sequelize";
 import { Cliente } from "../models/Cliente";
 import { generateToken } from "../utils/token";
 import { createMatricula, hashPassword } from "../utils/auth";
-import { AuthEmail } from "../emails/Email";
+import { AuthEmail } from "../emails/EmailClient";
 import { Asistencia } from "../models/Asistencia";
 
 export class ClientController {
@@ -92,14 +92,28 @@ export class ClientController {
 
   static updateByID = async (req: Request, res: Response) => {
     try {
-      const { password, token } = req.body;
+      const {
+        nombre,
+        apellido_paterno,
+        apellido_materno,
+        fecha_nacimiento,
+        password,
+        token,
+      } = req.body;
       if (password || token) {
         const error = new Error("La el campo no se puede cambiar ");
         res.status(400).json({ error: error.message });
         return;
       }
+      const matricula = createMatricula(
+        nombre,
+        apellido_paterno,
+        apellido_materno,
+        fecha_nacimiento
+      );
+      req.body.matricula = matricula;
       await req.client.update(req.body);
-      res.json("Cliente actualizado correctamente" );
+      res.json("Cliente actualizado correctamente");
     } catch (error) {
       // console.log(error)
       res.status(500).json({ error: "Ocurrió un error" });
@@ -112,7 +126,7 @@ export class ClientController {
       await req.client.update({
         eliminado,
       });
-      res.status(201).json("Cliente eliminado" );
+      res.json("Cliente eliminado");
     } catch (error) {
       // console.log(error)
       res.status(500).json({ error: "Ocurrió un error" });

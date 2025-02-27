@@ -21,7 +21,7 @@ export default function CustomersPrincipal({ memberships }: Props) {
   };
 
   return (
-    <div className="px-3 py-1">
+    <div className="px-1 py-1">
       <div className="flex justify-end mb-4">
         <button onClick={handleOpenModal} className="btn-global">
           Agregar membresia
@@ -87,7 +87,6 @@ export default function CustomersPrincipal({ memberships }: Props) {
                         <li key={index}>{beneficio}</li>
                       ))}
                     </ul>
-                    {membership.nombre}
                   </td>
                   <td className="px-4 py-3 text-sm text-gray-700">
                     {membership.duracion_dias}

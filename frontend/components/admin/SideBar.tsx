@@ -9,6 +9,7 @@ import { usePathname } from "next/navigation";
 import Logo from "../ui/Logo";
 import AdminMenu from "./AdminMenu";
 import { Admin } from "@/src/schemas/admin";
+// import { useEffect } from "react";
 
 export default function SideBar({
   content,
@@ -24,12 +25,21 @@ export default function SideBar({
     setSideBarActive(!sideBarActive);
   };
 
+  // // Stop the QR scanner when the sidebar is active on mobile
+  // useEffect(() => {
+  //   const qrScanner = document.getElementById("qr-reader");
+  //   if (sideBarActive && qrScanner) {
+  //     qrScanner.style.display = "none";
+  //   } else if (qrScanner) {
+  //     qrScanner.style.display = "block";
+  //   }
+  // }, [sideBarActive]);
+
   return (
     <>
       {/* Header */}
-      <header className="bg-gray-900 shadow-md p-2 flex justify-between items-center fixed w-full z-10 text-white ">
+      <header className="bg-gray-900 shadow-md p-2 flex justify-between items-center fixed w-full z-50 text-white ">
         <div className="flex items-center px-2">
-          {/* Botón para colapsar/expandir el sidebar (opcional) */}
           <button
             type="button"
             onClick={toggleSideBarState}
@@ -62,7 +72,7 @@ export default function SideBar({
       <div className="flex flex-1 pt-[65px]">
         {/* Sidebar */}
         <aside
-          className={`bg-gray-800  text-white p-4 fixed h-full w-48 transform transition-transform duration-500 ease-in-out ${
+          className={`bg-gray-800 text-white p-4 fixed h-full w-48 transform transition-transform duration-500 ease-in-out z-40 ${
             sideBarActive
               ? "translate-x-0"
               : "-translate-x-full md:translate-x-0"

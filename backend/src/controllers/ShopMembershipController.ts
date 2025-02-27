@@ -62,40 +62,42 @@ export class ShopMembershipController {
         },
       });
 
-      // Si hay membresia activa se detiene
-      if (lastMembership.estado === "activa") {
-        const error = new Error(
-          `Ya hay membresia activa con el tipo "${lastMembership.membresia_nombre}" `
-        );
-        res.status(404).json({ error: error.message });
-        return;
-      }
+      if (lastMembership) {
+        // Si hay membresia activa se detiene
+        if (lastMembership.estado === "activa") {
+          const error = new Error(
+            `Ya hay membresia activa con el tipo "${lastMembership.membresia_nombre}" `
+          );
+          res.status(404).json({ error: error.message });
+          return;
+        }
 
-      // Revisa si la ultima compra tiene la misma membresia que se quiere comprar
-      if (
-        lastMembership.membresia_id == membership.id &&
-        lastMembership.estado == "expirada"
-      ) {
-        // Se renueva la membresia pasada
-        const lastSale = await VentasMembresia.findByPk(
-          lastMembership.venta_id
-        );
-        lastSale.fecha_renovacion = dateToday;
-        await lastSale.save();
+        // Revisa si la ultima compra tiene la misma membresia que se quiere comprar
+        if (
+          lastMembership.membresia_id == membership.id &&
+          lastMembership.estado == "expirada"
+        ) {
+          // Se renueva la membresia pasada
+          const lastSale = await VentasMembresia.findByPk(
+            lastMembership.venta_id
+          );
+          lastSale.fecha_renovacion = dateToday;
+          await lastSale.save();
 
-        // Se crea una nueva venta
-        const newSale = {
-          cliente_id: client.id,
-          membresia_id: membership.id,
-          fecha_expiracion,
-          total: membership.precio,
-        };
+          // Se crea una nueva venta
+          const newSale = {
+            cliente_id: client.id,
+            membresia_id: membership.id,
+            fecha_expiracion,
+            total: membership.precio,
+          };
 
-        const sale = new VentasMembresia(newSale);
+          const sale = new VentasMembresia(newSale);
 
-        await sale.save();
-        res.json({ msg: "Membresia renovada" });
-        return;
+          await sale.save();
+          res.json("Membresia renovada");
+          return;
+        }
       }
 
       const saleData = {
@@ -109,9 +111,9 @@ export class ShopMembershipController {
 
       await sale.save();
 
-      res.json({ msg: "Venta realizada correctamente con nueva membresia" });
+      res.json("Venta realizada correctamente con nueva membresia");
     } catch (error) {
-      // console.log(error);
+      console.log(error);
       res.status(500).json({ error: "Ocurrio un error en el servidor" });
     }
   };

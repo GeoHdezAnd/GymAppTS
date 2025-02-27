@@ -7,7 +7,6 @@ import {
   PopoverPanel,
   Transition,
 } from "@headlessui/react";
-import Link from "next/link";
 import Logo from "../ui/Logo";
 import { Admin } from "@/src/schemas/admin";
 import logout from "@/actions/admin/auth/logout-action";
@@ -34,12 +33,6 @@ export default function AdminMenu({ admin }: { admin: Admin }) {
               Hola:{" "}
               {`${admin.nombre} ${admin.apellido_paterno} ${admin.apellido_materno}`}
             </p>
-            <Link
-              href="/admin/profile/settings"
-              className="block p-2 hover:bg-gray-300 rounded-md transition- duration-300"
-            >
-              Mi Perfil
-            </Link>
 
             <button
               className="block p-2 hover:bg-gray-300 rounded-md w-full text-left  transition- duration-300"

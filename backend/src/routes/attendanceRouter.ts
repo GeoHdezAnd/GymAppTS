@@ -6,8 +6,7 @@ import { authenticate } from "../middleware/authAdmin";
 
 const router = Router();
 
-
-router.get("/", AttendanceController.getAll);
+router.get("/", authenticate, AttendanceController.getAll);
 router.post(
   "/",
   body("matricula").notEmpty().withMessage("No es valida la matricula"),

@@ -4,15 +4,14 @@ import { Html5QrcodeScanner } from "html5-qrcode";
 import { useEffect, useRef, useState } from "react";
 
 const QRScanner: React.FC = () => {
-  const [reqMessage, setReqMessage] = useState<string | boolean>(false); // Store the API response message
+  const [reqMessage, setReqMessage] = useState<string | boolean>(false);
   const [reqStateSuccess, setReqStateSuccess] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [matricula, setMatricula] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [scannerKey, setScannerKey] = useState(0); // Unique key for the scanner container
+  const [scannerKey, setScannerKey] = useState(0);
   const scannerRef = useRef<Html5QrcodeScanner | null>(null);
 
-  // Regex to validate the matricula format (AAAA-1234)
   const validateMatricula = (matricula: string): boolean => {
     const regex = /^[A-Z]{4}-\d{4}$/;
     return regex.test(matricula);
@@ -20,7 +19,6 @@ const QRScanner: React.FC = () => {
 
   const handleAttendance = async (matricula: string) => {
     if (matricula !== "") {
-      // Validate the matricula format
       if (!validateMatricula(matricula)) {
         setReqMessage("Formato no valido");
         setReqStateSuccess(false);
@@ -29,16 +27,14 @@ const QRScanner: React.FC = () => {
       }
 
       setIsLoading(true);
-      setReqMessage(false); // Reset the message before making a new request
+      setReqMessage(false);
       try {
         const result = await recordAttendance(matricula);
         if (result.errors) {
-          // Save the first error message in reqMessage
           setReqMessage(result.errors[0]);
           setReqStateSuccess(false);
         }
         if (result.success) {
-          // Save the success message in reqMessage
           setReqMessage(result.success);
           setReqStateSuccess(true);
         }
@@ -78,7 +74,7 @@ const QRScanner: React.FC = () => {
 
         // Stop the scanner after a successful scan
         scanner.clear();
-        scannerRef.current = null; // Reset the scanner ref
+        scannerRef.current = null;
       },
       (error: string) => {
         setIsLoading(false);
@@ -114,27 +110,30 @@ const QRScanner: React.FC = () => {
   }, [scannerKey]); // Reinitialize the scanner when scannerKey changes
 
   const handleRestartScan = () => {
-    setMatricula(null); // Reset the matricula state
-    setError(null); // Reset any errors
-    setReqMessage(false); // Reset the API response message
-    setScannerKey((prevKey) => prevKey + 1); // Force re-render of the scanner container
+    setMatricula(null);
+    setError(null);
+    setReqMessage(false);
+    setScannerKey((prevKey) => prevKey + 1);
   };
 
   return (
     <div className="flex flex-col items-center justify-center">
       <div className="p-5 rounded-lg shadow-lg w-full md:w-1/2 max-w-md">
-        <h1 className="text-2xl font-bold text-center mb-4">
+        <h1 className="text-2xl font-bold text-center ">
           Asistencias lector QR
         </h1>
-        <p className="text-gray-600 text-center mb-6">
+        <p className="text-gray-600 text-center ">
           Centra tu QR en los contornos del scanner
+        </p>
+        <p className="text-gray-600 text-center text-xs">
+          **Si hay bug en el lector recarga la página**
         </p>
 
         {/* Scanner Container */}
         <div
-          key={scannerKey} // Use a unique key to force re-render
+          key={scannerKey}
           id="qr-reader"
-          className="w-full md:w-4/5 aspect-square rounded-lg overflow-hidden relative m-auto"
+          className="w-full md:w-4/5 aspect-square rounded-lg overflow-hidden relative m-auto p-2"
         >
           {isLoading && (
             <div className="absolute inset-0 flex items-center justify-center bg-gray-200">
@@ -143,7 +142,6 @@ const QRScanner: React.FC = () => {
             </div>
           )}
 
-          {/* Display API Response Message */}
           {reqMessage && (
             <div className="absolute inset-0 flex items-center justify-center bg-white bg-opacity-90">
               <div
@@ -165,7 +163,6 @@ const QRScanner: React.FC = () => {
           )}
         </div>
 
-        {/* Result or Error Message */}
         {matricula ? (
           <div className="mt-4 p-2 bg-gray-800 text-white rounded-lg text-center">
             {`Matricula: ${matricula}`}

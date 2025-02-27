@@ -5,22 +5,33 @@ import { CustomerType, CustomersType } from "@/types";
 import ProfilePhotoCustomer from "@/components/ui/ProfilePhotoCustomer";
 import { formatDate } from "@/src/utils";
 import CustomerMenu from "./CustomerMenu";
+import UpdateClientModal from "./UpdateClientModal";
 
 type Props = {
   customers: CustomersType;
 };
 
 export default function CustomersPrincipal({ customers }: Props) {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalCreateOpen, setIsModalCreateOpen] = useState(false);
+  const [modalUpdate, setModalUpdate] = useState({
+    active: false,
+    clientID: 0,
+  });
 
   const handleOpenModal = () => {
-    setIsModalOpen(true);
+    setIsModalCreateOpen(true);
   };
 
   const handleCloseModal = () => {
-    setIsModalOpen(false);
+    setIsModalCreateOpen(false);
   };
 
+  const handleUpdateOpen = (clientID: number) => {
+    setModalUpdate({ active: true, clientID });
+  };
+  const handleUpdateClose = () => {
+    setModalUpdate({ active: false, clientID: 0 });
+  };
   return (
     <div className="px-3 py-1">
       <div className="flex justify-end mb-4">
@@ -29,9 +40,18 @@ export default function CustomersPrincipal({ customers }: Props) {
         </button>
       </div>
 
-      {/* Modal */}
-      {isModalOpen && <CreateClientModal handleCloseModal={handleCloseModal} />}
+      {/* Modal Create */}
+      {isModalCreateOpen && (
+        <CreateClientModal handleCloseModal={handleCloseModal} />
+      )}
 
+      {/* Modal Update */}
+      {modalUpdate.active && (
+        <UpdateClientModal
+          handleUpdateClose={handleUpdateClose}
+          clientID={modalUpdate.clientID}
+        />
+      )}
       {/*TABLE */}
       <div className="shadow-md rounded-lg text-center w-full">
         <table className="w-full bg-white border-collapse">
@@ -100,7 +120,10 @@ export default function CustomersPrincipal({ customers }: Props) {
                   </td>
                   <td className="px-4 py-3 text-sm relative">
                     <div className="flex justify-center">
-                      <CustomerMenu clientID={customer.id} />
+                      <CustomerMenu
+                        clientID={customer.id}
+                        handleUpdateOpen={handleUpdateOpen}
+                      />
                     </div>
                   </td>
                 </tr>

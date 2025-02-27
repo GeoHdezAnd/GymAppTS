@@ -8,7 +8,8 @@ type ActionStateType = {
   success: string;
 };
 
-export default async function createNewClient(
+export default async function updateClient(
+  clientID: number,
   prevState: ActionStateType,
   formData: FormData
 ) {
@@ -31,9 +32,9 @@ export default async function createNewClient(
     };
   }
   const token = await getToken();
-  const url = `${process.env.API_URL}/client`;
+  const url = `${process.env.API_URL}/client/${clientID}`;
   const req = await fetch(url, {
-    method: "POST",
+    method: "PUT",
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
